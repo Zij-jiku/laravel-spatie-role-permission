@@ -4,6 +4,7 @@
     Dashboard Page - Admin Panel
 @endsection
 
+
 @section('admin-content')
     <!-- page title area start -->
     <div class="page-title-area">
@@ -18,19 +19,56 @@
                 </div>
             </div>
             <div class="col-sm-6 clearfix">
-                <div class="user-profile pull-right">
-                    <img class="avatar user-thumb" src="{{ asset('backend/assets/images/author/avatar.png') }}"
-                        alt="avatar">
-                    <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Kumkum Rai <i class="fa fa-angle-down"></i>
-                    </h4>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Message</a>
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="#">Log Out</a>
-                    </div>
-                </div>
+                @include('backend.layouts.partials.logout')
             </div>
         </div>
     </div>
     <!-- page title area end -->
+
+    <div class="main-content-inner">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-4 mt-5 mb-3">
+                        <div class="card">
+                            <div class="seo-fact sbg1">
+                                <a href="{{ route('admin.roles.index') }}">
+                                    <div class="p-4 d-flex justify-content-between align-items-center">
+                                        <div class="seofct-icon"><i class="fa fa-users"></i> Roles</div>
+                                        <h2>{{ $total_roles }}</h2>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mt-5 mb-3">
+                        <div class="card">
+                            <div class="seo-fact sbg2">
+                                <a href="{{ route('admin.admins.index') }}">
+                                    <div class="p-4 d-flex justify-content-between align-items-center">
+                                        <div class="seofct-icon"><i class="fa fa-user"></i> Admins</div>
+                                        <h2>{{ $total_admins }}</h2>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mt-5 mb-3">
+                        <div class="card">
+                            <div class="seo-fact sbg3">
+                                <div class="p-4 d-flex justify-content-between align-items-center">
+                                    <div class="seofct-icon"><i class="fa fa-user"></i> Permissions</div>
+                                    <h2>{{ $total_permissions }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

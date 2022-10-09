@@ -24,5 +24,7 @@ class UserSeeder extends Seeder
             $user->password = Hash::make('12345678');
             $user->save();
         }
+
+
     }
 }
