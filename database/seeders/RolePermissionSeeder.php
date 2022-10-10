@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Admin;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -16,28 +16,30 @@ class RolePermissionSeeder extends Seeder
      */
     public function run()
     {
-        // create roles
-        $roleSuperAdmin = Role::create(['name' => 'superadmin', 'guard_name' => 'admin']);
-        $roleAdmin = Role::create(['name' => 'admin', 'guard_name' => 'admin']);
-        $roleEditor = Role::create(['name' => 'editor', 'guard_name' => 'admin']);
-        $roleUser = Role::create(['name' => 'user', 'guard_name' => 'admin']);
+        /**
+         * Enable these options if you need same role and other permission for User Model
+         * Else, please follow the below steps for admin guard
+         */
 
-        // permission list array
+        // Create Roles and Permissions
+        // $roleSuperAdmin = Role::create(['name' => 'superadmin']);
+        // $roleAdmin = Role::create(['name' => 'admin']);
+        // $roleEditor = Role::create(['name' => 'editor']);
+        // $roleUser = Role::create(['name' => 'user']);
+
+
+        // Permission List as array
         $permissions = [
 
             [
                 'group_name' => 'dashboard',
-                'guard_name' => 'admin',
                 'permissions' => [
-                    // Dashboard Permission
                     'dashboard.view',
                     'dashboard.edit',
                 ]
             ],
-
             [
                 'group_name' => 'blog',
-                'guard_name' => 'admin',
                 'permissions' => [
                     // Blog Permissions
                     'blog.create',
@@ -47,11 +49,8 @@ class RolePermissionSeeder extends Seeder
                     'blog.approve',
                 ]
             ],
-
-
             [
                 'group_name' => 'admin',
-                'guard_name' => 'admin',
                 'permissions' => [
                     // admin Permissions
                     'admin.create',
@@ -61,10 +60,8 @@ class RolePermissionSeeder extends Seeder
                     'admin.approve',
                 ]
             ],
-
             [
                 'group_name' => 'role',
-                'guard_name' => 'admin',
                 'permissions' => [
                     // role Permissions
                     'role.create',
@@ -72,13 +69,10 @@ class RolePermissionSeeder extends Seeder
                     'role.edit',
                     'role.delete',
                     'role.approve',
-
                 ]
             ],
-
             [
                 'group_name' => 'profile',
-                'guard_name' => 'admin',
                 'permissions' => [
                     // profile Permissions
                     'profile.view',
@@ -87,15 +81,36 @@ class RolePermissionSeeder extends Seeder
             ],
         ];
 
+
+        // Create and Assign Permissions
+        // for ($i = 0; $i < count($permissions); $i++) {
+        //     $permissionGroup = $permissions[$i]['group_name'];
+        //     for ($j = 0; $j < count($permissions[$i]['permissions']); $j++) {
+        //         // Create Permission
+        //         $permission = Permission::create(['name' => $permissions[$i]['permissions'][$j], 'group_name' => $permissionGroup]);
+        //         $roleSuperAdmin->givePermissionTo($permission);
+        //         $permission->assignRole($roleSuperAdmin);
+        //     }
+        // }
+
+        // Do same for the admin guard for tutorial purposes
+        $roleSuperAdmin = Role::create(['name' => 'superadmin', 'guard_name' => 'admin']);
+
         // Create and Assign Permissions
         for ($i = 0; $i < count($permissions); $i++) {
-            $permissonGroup = $permissions[$i]['group_name'];
-            $guardName = $permissions[$i]['guard_name'];
+            $permissionGroup = $permissions[$i]['group_name'];
             for ($j = 0; $j < count($permissions[$i]['permissions']); $j++) {
-                $permission = Permission::create(['name' => $permissions[$i]['permissions'][$j], 'guard_name' => $guardName, 'group_name' => $permissonGroup]);
+                // Create Permission
+                $permission = Permission::create(['name' => $permissions[$i]['permissions'][$j], 'group_name' => $permissionGroup, 'guard_name' => 'admin']);
                 $roleSuperAdmin->givePermissionTo($permission);
                 $permission->assignRole($roleSuperAdmin);
             }
+        }
+
+        // Assign super admin role permission to superadmin user
+        $admin = Admin::where('username', 'superadmin')->first();
+        if ($admin) {
+            $admin->assignRole($roleSuperAdmin);
         }
     }
 }

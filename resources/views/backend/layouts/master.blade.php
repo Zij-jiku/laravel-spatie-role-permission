@@ -7,6 +7,7 @@
     <title>@yield('title', 'Laravel Role Admin')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @include('backend.layouts.partials.styles')
+    @yield('styles')
 </head>
 
 <body>
@@ -21,7 +22,7 @@
     <!-- page container area start -->
     <div class="page-container">
 
-        @include('backend.layouts.partials.sidebar')
+       @include('backend.layouts.partials.sidebar')
 
         <!-- main content area start -->
         <div class="main-content">

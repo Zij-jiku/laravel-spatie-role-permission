@@ -20,7 +20,7 @@
         <div class="loader"></div>
     </div>
     <!-- preloader area end -->
-
+   
     @yield('auth-content')
 
     @include('backend.layouts.partials.scripts')

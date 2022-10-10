@@ -12,6 +12,7 @@
     </style>
 @endsection
 
+
 @section('admin-content')
     <!-- page title area start -->
     <div class="page-title-area">
@@ -21,6 +22,7 @@
                     <h4 class="page-title pull-left">Role Create</h4>
                     <ul class="breadcrumbs pull-left">
                         <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ route('admin.roles.index') }}">All Roles</a></li>
                         <li><span>Create Role</span></li>
                     </ul>
                 </div>
@@ -39,12 +41,6 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title">Create New Role</h4>
-
-                        <p class="float-right mb-2">
-                            <a class="btn btn-primary text-white" href="{{ route('admin.roles.index') }}">Roles View</a>
-                        </p>
-                        <div class="clearfix"></div>
-
                         @include('backend.layouts.partials.messages')
 
                         <form action="{{ route('admin.roles.store') }}" method="POST">
@@ -91,7 +87,6 @@
                                                 </div>
                                                 @php  $j++; @endphp
                                             @endforeach
-                                            <hr>
                                             <br>
                                         </div>
 
@@ -99,12 +94,12 @@
                                     @php  $i++; @endphp
                                 @endforeach
 
+
                             </div>
 
 
                             <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">Save Role</button>
                         </form>
-
                     </div>
                 </div>
             </div>
@@ -115,5 +110,5 @@
 @endsection
 
 @section('scripts')
-    @include('backend.pages.roles.partials.script')
+    @include('backend.pages.roles.partials.scripts')
 @endsection
